@@ -33,6 +33,7 @@ mvNCCompile ./models/caffemodels/yoloV2Tiny20.prototxt -w ./models/caffemodels/y
 There will be a file *graph* generated as converted models for NCS. Just copy this *graph* file to the repo on the PYNQ-Z1.
 
 ### Step 4. Run tests
+Use the Jupyter notebooks in the notebooks directory of this repo to test YOLOv2 with an image file, a webcam or a HDMI input. You can also run the detection example script by using this command in the terminal:
 ```	
 python3.6 ./detectionExample/Main.py --image ./data/dog.jpg
 ```
@@ -70,4 +71,4 @@ Research Only
 
 # Author
 duangenquan@gmail.com
-Mods for PYNQ-Z1 by [Jeff Johnson](http://www.fpgadeveloper.com)
+Mods for PYNQ-Z1 and Jupyter notebooks by [Jeff Johnson](http://www.fpgadeveloper.com)

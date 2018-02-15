@@ -90,6 +90,20 @@ class ObjectWrapper():
         pyresults = [BBox(x,xscale,yscale, offx, offy) for x in internalresults]
         return pyresults
 
+    '''
+    DetectFromPreparedImage must be given a prepared image (resized to 416x416 and rescaled).
+    This function allows the resize and rescaling operations to be handled externally
+    from the Detect function to allow for them to be accelerated in the FPGA.
+    '''
+    def DetectFromPreparedImage(self, img,imgw,imgh,offx,offy,xscale,yscale):
+        ObjectWrapper.graphHandle[0].LoadTensor(img.astype(np.float16), 'user object')
+        out, userobj = ObjectWrapper.graphHandle[0].GetResult()
+        out = self.Reshape(out, self.dim)
+
+        internalresults = self.detector.Detect(out.astype(np.float32), int(out.shape[0]/self.wh), self.blockwd, self.blockwd, self.classes, imgw, imgh, self.threshold, self.nms, self.targetBlockwd)
+        pyresults = [BBox(x,xscale,yscale, offx, offy) for x in internalresults]
+        return pyresults
+
     def Parallel(self, img):
         pyresults = {}
         for i in range(ObjectWrapper.devNum):
