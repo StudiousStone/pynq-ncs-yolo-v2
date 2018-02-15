@@ -33,7 +33,7 @@ public:
 #endif
 		bp::list bplist = bp::list();
 		void const *buffer;
-		long buflen;
+		int buflen;
 		bool isReadBuffer = !PyObject_AsReadBuffer(obj.ptr(), &buffer, &buflen);
 		if(!isReadBuffer)
 		{

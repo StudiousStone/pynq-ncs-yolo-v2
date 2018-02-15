@@ -35,9 +35,9 @@ if __name__ == '__main__':
         print ('total time is " milliseconds', elapsedTime.total_seconds()*1000)
 
         imdraw = Visualize(img, results)
-        cv2.imshow('Demo',imdraw)
+        #cv2.imshow('Demo',imdraw)
         cv2.imwrite('test.jpg',imdraw)
-        cv2.waitKey(10000)
+        #cv2.waitKey(10000)
     elif sys.argv[1] == '--video':
         # video preprocess
         cap = cv2.VideoCapture(videofile)
