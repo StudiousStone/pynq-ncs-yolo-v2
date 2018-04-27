@@ -16,21 +16,33 @@
 # How To Use
 The following experiments are done on a PYNQ-Z1. You'll also need a Linux PC to compile the graph file with NCSDK.
 
-### Step 1. Install Boost on the PYNQ-Z1
-```apt-get install libboost-python-dev```
+### Step 1. Setup your PYNQ-Z1 to work with Movidius NCS
+Follow this guide to [setup your PYNQ-Z1 for the Movidius NCS](http://www.fpgadeveloper.com/2018/04/setting-up-the-pynq-z1-for-the-intel-movidius-neural-compute-stick.html).
 
-### Step 2. Clone this repo and compile Python Wrapper
+For this project, you will also need to install Boost Python on the PYNQ-Z1:
 ```
+apt-get install libboost-python-dev
+```
+
+### Step 2. Clone this repo on PYNQ-Z1 and compile Python Wrapper
+```
+cd /home/xilinx/jupyter_notebooks
 git clone https://github.com/fpgadeveloper/pynq-ncs-yolo-v2.git
 make
 ```
 
-### Step 3. Convert Caffe to NCS on development Linux PC
-To generate the graph file you will have to install NCSDK on a Linux PC, then clone this repository and run the following command:
+### Step 3. Clone this repo to a development Linux PC and Convert Caffe to NCS
+To generate the graph file you will have to install NCSDK on a Linux PC, then clone this repository to the dev PC.
+```
+mkdir ~/workspace
+cd ~/workspace
+git clone https://github.com/fpgadeveloper/pynq-ncs-yolo-v2.git
+```
+Then generate the *graph* file with this command:
 ```
 mvNCCompile ./models/caffemodels/yoloV2Tiny20.prototxt -w ./models/caffemodels/yoloV2Tiny20.caffemodel -s 12
 ```
-There will be a file *graph* generated as converted models for NCS. Just copy this *graph* file to the repo on the PYNQ-Z1.
+Finally you must copy this *graph* file to ```/home/xilinx/jupyter_notebooks/pynq-ncs-yolo-v2``` on the PYNQ-Z1.
 
 ### Step 4. Run tests
 Use the Jupyter notebooks in the notebooks directory of this repo to test YOLOv2 with an image file, a webcam or a HDMI input. You can also run the detection example script by using this command in the terminal:
