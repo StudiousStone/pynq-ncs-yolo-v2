@@ -1,6 +1,6 @@
-# YOLOv2 for Intel/Movidius Neural Compute Stick (NCS)
+# YOLOv2 for PYNQ-Z1 and Intel/Movidius Neural Compute Stick (NCS)
 
-*This project shows how to run tiny yolov2 (20 classes) with movidius stick:*
+*This project shows how to run tiny yolov2 (20 classes) with PYNQ-Z1 and movidius stick:*
 + A python convertor from yolo to caffe
 + A c/c++ implementation and python wrapper for region layer of yolov2
 + A sample for running yolov2 with movidius stick in images or videos
@@ -14,20 +14,27 @@
 + Fix confident offset issues in nms, 12/12/2017
 
 # How To Use
-The following experiments are done on an Intel NUC with ubuntu 16.04.
-	
-### Step 1. Compile Python Wrapper
-```make```
+The following experiments are done on a PYNQ-Z1. You'll also need a Linux PC to compile the graph file with NCSDK.
 
-### Step 2. Convert Caffe to NCS
+### Step 1. Install Boost on the PYNQ-Z1
+```apt-get install libboost-python-dev```
+
+### Step 2. Clone this repo and compile Python Wrapper
+```
+git clone https://github.com/fpgadeveloper/pynq-ncs-yolo-v2.git
+make
+```
+
+### Step 3. Convert Caffe to NCS on development Linux PC
+To generate the graph file you will have to install NCSDK on a Linux PC, then clone this repository and run the following command:
 ```
 mvNCCompile ./models/caffemodels/yoloV2Tiny20.prototxt -w ./models/caffemodels/yoloV2Tiny20.caffemodel -s 12
 ```
-There will be a file *graph* generated as converted models for NCS.
+There will be a file *graph* generated as converted models for NCS. Just copy this *graph* file to the repo on the PYNQ-Z1.
 
-### Step 3. Run tests
+### Step 4. Run tests
 ```	
-python3 ./detectionExample/Main.py --image ./data/dog.jpg
+python3.6 ./detectionExample/Main.py --image ./data/dog.jpg
 ```
 This loads *graph* by default and results will be like this: 
 ![](/data/yolo_dog.jpg)
@@ -63,3 +70,4 @@ Research Only
 
 # Author
 duangenquan@gmail.com
+Mods for PYNQ-Z1 by [Jeff Johnson](http://www.fpgadeveloper.com)
